@@ -3,15 +3,17 @@ on: issue_comment
 
 jobs:
   pr-comment:
-    if: ${{ github.event.issue.pull_request }}
+    # github actions의 if 문에서는 ${{ }} 기호를 생략하는 것이 표준 권장 사항입니다.
+    if: github.event.issue.pull_request
     runs-on: ubuntu-latest
     steps:
       - name: pr comment
-        run: echo ${{ github.event.issue.pull_request }}
+        run: echo "This is a PR comment"
 
   issue-comment:
-    if: ${{ !github.event.issue.pull_request }}
+    # ! 기호가 맨 앞에 올 때는 YAML 문법 에러를 방지하기 위해 따옴표('')로 감싸주어야 안전합니다.
+    if: "!github.event.issue.pull_request"
     runs-on: ubuntu-latest
     steps:
       - name: issue comment
-        run: echo ${{ github.event.issue.pull_request }}
+        run: echo "This is an Issue comment"
